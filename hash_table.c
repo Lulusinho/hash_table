@@ -5,9 +5,9 @@
 
 /*
 to do list:
-    hash function;
-    hash inserting
-    hash treatment
+    hash function; *
+    hash inserting *
+    hash treatment *
     hash search
 
 */
@@ -24,14 +24,20 @@ struct node
 
 } typedef node;
 
-struct hash_table
+struct hash_T
 {
     node *array[sizeh];
-    int quantity
-
-} typedef hash_table;
+    int quantity;
+}typedef hash_table;
 
 // This hash function is used only to give a example, It's generic and is going to cause a lot of colision
+void hashinicialize(hash_table **hash);
+int hashfunction(int object);
+node *allocnode(int object);
+void insert_hash(hash_table **hash_t, int object);
+node *hashsearch(hash_table **hash, int input);
+
+
 void hashinicialize(hash_table **hash)
 {
     for (int i = 0; i < sizeh; i++)
@@ -73,4 +79,19 @@ void insert_hash(hash_table **hash_t, int object)
         aux->next = item;
     }
     (*hash_t)->quantity++;
+}
+
+node *hashsearch(hash_table **hash, int input){
+
+    int key = hashfunction(input);
+    node *object = (*hash)->array[key];
+
+    while (object->data != input && object != NULL)
+    {
+        object = object->next;
+    }
+    if (object->data == input)
+        return object;
+    else
+        printf("[ERROR] invalid input");
 }
